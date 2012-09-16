@@ -1,0 +1,42 @@
+doctype 5
+html
+  head
+    title= site.name
+
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/#{fromMobile ? "mobile" : "www"}.css')
+
+    script(src='/javascripts/jquery.js')
+    script(src='/javascripts/underscore.js')
+    script(src='/javascripts/jquery-ui.js')
+
+  body
+    #header 
+      #sitename= site.name
+      #sitetitle !{site.title} 
+      #refreshButton
+    #body
+      #home
+        #topLoading
+          img.loading(src="/images/loading.gif")
+        block content
+        #bottomLoading
+          img.loading(src="/images/loading.gif")
+        #moreButton More
+        #end You've touched the ground.
+      #about 
+        p !{site.about}
+        p 
+          | Powered by 
+          a(href="https://github.com/leonchen/jBlog", target="_blank") jBlog
+      #source
+    #footer
+      table.menu
+        thead
+          tr
+            th#homeButton.on Home
+            th#sourceButton Source
+            th#aboutButton About
+
+    script(src='/javascripts/site.js')
+    script(src='/javascripts/#{fromMobile ? "mobile" : "www"}.js')
