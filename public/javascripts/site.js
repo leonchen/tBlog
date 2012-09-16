@@ -7,21 +7,25 @@ var pageSource = 'blog';
 var pageTime = (new Date()).getTime();
 var requesters = {};
 
-var $home = $("#home");
-var $source = $("#source");
-var $about = $("#about");
 
 var $topics = $("#topics");
 var $refreshButton = $('#refreshButton');
-var $homeButton = $("#homeButton");
-var $sourceButton = $("#sourceButton");
-var $aboutButton = $("#aboutButton");
 var $moreButton = $('#moreButton');
 
 var $topLoading = $('#topLoading');
 var $bottomLoading = $('#bottomLoading');
 var $end = $('#end');
 var $topicTemplate = $("#topicTemplate").html(); 
+
+var $bodyElements = $('#body>div');
+var $navButtons = $("#footer th");
+
+function showDate(timestamp) {
+  var localTime = new Date();
+  var date = new Date(timestamp - localTime.getTimezoneOffset()*60000);
+  return date.toJSON().replace(/[^\d-:]+/g, ' ').replace(/\s\d+\s*$/,'');
+
+}
 
 function refreshTopics() {
   if (!requesters.latest) requesters.latest = {};
@@ -39,6 +43,7 @@ function refreshTopics() {
       if (pageTime < t.timestamp) pageTime = t.timestamp;
       $topics.prepend(_.template($topicTemplate, t));
     }
+    window.scrollTo(0, 0);
   });
 }
 
@@ -83,26 +88,12 @@ $moreButton.click(function () {
   loadMoreTopics();
 });
 
-$navButtons = $("#footer th");
 $navButtons.click(function () {
+  var $this = $(this);
   $navButtons.removeClass("on");
-  $(this).addClass("on");
-});
-$homeButton.click(function () {
-  $about.hide();
-  $source.hide();
-  $home.show();
-});
-$sourceButton.click(function () {
-  $home.hide();
-  $about.hide();
-  $source.show();
-});
-$aboutButton.click(function () {
-  console.log('111111111');
-  $home.hide();
-  $source.hide();
-  $about.show();
+  $this.addClass("on");
+  $bodyElements.hide();
+  $bodyElements.eq($this.prevAll("th").length).show();
 });
 
 $(function () {

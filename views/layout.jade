@@ -15,6 +15,7 @@ html
       #sitename= site.name
       #sitetitle !{site.title} 
       #refreshButton
+        img(src="/images/refresh.png")
     #body
       #home
         #topLoading
@@ -24,19 +25,19 @@ html
           img.loading(src="/images/loading.gif")
         #moreButton More
         #end You've touched the ground.
+      #source
       #about 
         p !{site.about}
         p 
           | Powered by 
           a(href="https://github.com/leonchen/jBlog", target="_blank") jBlog
-      #source
     #footer
       table.menu
         thead
           tr
-            th#homeButton.on Home
-            th#sourceButton Source
-            th#aboutButton About
+            th.on Home
+            th Source
+            th About
 
     script(src='/javascripts/site.js')
     script(src='/javascripts/#{fromMobile ? "mobile" : "www"}.js')

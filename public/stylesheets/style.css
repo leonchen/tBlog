@@ -19,6 +19,15 @@ body {
   font-weight: bold;
   text-shadow: 0.05em 0.05em #fff;
 }
+#refreshButton {
+  position:absolute;
+  right: 1em;
+  top: 1em;
+}
+#refreshButton img {
+  width: 2em;
+  height: 2em;
+}
 #body{
   margin: 4em 0.5em 4em 0.5em;
 }
@@ -80,4 +89,21 @@ body {
 
 #about,#source {
   display: none;
+}
+
+
+.topic {
+  padding: 1em 0em;
+  border-bottom: 0.1em solid #ddd;
+  text-align: left;
+  color: #666;
+  font-size: 1em;
+}
+.topic .topicTitle {
+  font-weight: bold;
+}
+.topic .topicTime {
+  font-size: 0.8em;
+}
+.topic .topicContent {
 }
