@@ -19,14 +19,17 @@ body {
   font-weight: bold;
   text-shadow: 0.05em 0.05em #fff;
 }
-#refreshButton {
+#refreshButton, #refreshLoading {
   position:absolute;
   right: 1em;
   top: 1em;
 }
-#refreshButton img {
+#refreshButton img, #refreshLoading img {
   width: 2em;
   height: 2em;
+}
+#refreshLoading{
+  display: none;
 }
 #body{
   margin: 4em 0.5em 4em 0.5em;
@@ -98,6 +101,17 @@ body {
   text-align: left;
   color: #666;
   font-size: 1em;
+  clear: both;
+}
+.topic .avatar{
+  width: 5em;
+  text-align: center;
+  vertical-align: top;
+}
+.topic .avatar img{
+  width: 4em;
+}
+.topic .rightContent {
 }
 .topic .topicTitle {
   font-weight: bold;
@@ -106,4 +120,13 @@ body {
   font-size: 0.8em;
 }
 .topic .topicContent {
+   color: #111;
 }
+.topic .topicStats {
+  text-align: right;
+  font-size: 0.8em;
+}
+.topic .topicStats span {
+  margin-right: 1em;
+}
+

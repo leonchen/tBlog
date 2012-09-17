@@ -1,12 +1,49 @@
 extends layout
 
 block content
-  #topics
+  #header 
+    #sitename= site.name
+    #sitetitle !{site.title} 
+    #refreshButton
+      img(src="/images/refresh.png")
+    #refreshLoading
+      img(src="/images/refreshLoading.gif")
+  #body
+    #home
+      #topLoading
+        img.loading(src="/images/loading.gif")
+      #topics
+      #bottomLoading
+        img.loading(src="/images/loading.gif")
+      #moreButton More
+      #end You've touched the ground.
+    #source
+    #about 
+      p !{site.about}
+      p 
+        | Powered by 
+        a(href="https://github.com/leonchen/jBlog", target="_blank") jBlog
+  #footer
+    table.menu
+      thead
+        tr
+          th.on Home
+          th Source
+          th About
 
   script(id="topicTemplate", type="text/tempate")
     <div class="topic">
-    <div class="topicTitle"><%- title %></div> 
-    <div class="topicTime">Posted at <%- showDate(timestamp) %></div>
-    <div class="topicContent"><%- content %></div> 
+    <table>
+    <tr>
+    <td class="avatar"><img src="<%= profile_image_url %>" /></td>
+    <td>
+    <div class="topicTitle"><%- screen_name %></div> 
+    <div class="topicTime">Posted at <%- created_at %></div>
+    <div class="topicContent"><p><%- text %><p><% if (retweeted_status) { %><%- retweeted_status.screen_name %>:<%- retweeted_status.text %><% }%></div> 
+    <div class="topicStats"><span><%= comments_count %> comments</span><span><%= reposts_count %> Reposts</span></div> 
+    </td>
+    </tr>
+    </table>
     </div>
-    
+
+  script(src='/javascripts/topics.js')

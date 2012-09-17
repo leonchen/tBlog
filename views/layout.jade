@@ -11,33 +11,6 @@ html
     script(src='/javascripts/jquery-ui.js')
 
   body
-    #header 
-      #sitename= site.name
-      #sitetitle !{site.title} 
-      #refreshButton
-        img(src="/images/refresh.png")
-    #body
-      #home
-        #topLoading
-          img.loading(src="/images/loading.gif")
-        block content
-        #bottomLoading
-          img.loading(src="/images/loading.gif")
-        #moreButton More
-        #end You've touched the ground.
-      #source
-      #about 
-        p !{site.about}
-        p 
-          | Powered by 
-          a(href="https://github.com/leonchen/jBlog", target="_blank") jBlog
-    #footer
-      table.menu
-        thead
-          tr
-            th.on Home
-            th Source
-            th About
+    block content
 
     script(src='/javascripts/site.js')
-    script(src='/javascripts/#{fromMobile ? "mobile" : "www"}.js')

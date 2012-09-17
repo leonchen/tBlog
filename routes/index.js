@@ -1,4 +1,5 @@
 var topics = require('./topics');
+var weibo = require("../resources/weibo");
 
 module.exports = function (app) {
   // homepage
@@ -7,9 +8,15 @@ module.exports = function (app) {
   });
 
   app.get("/topics/more", function (req, res) {
-    res.send(200, topics.getMoreTopics(req));
+    weibo.getTopics(req, function (topics) {
+      res.send(200, topics);
+    });
+    //res.send(200, topics.getMoreTopics(req));
   });
   app.get("/topics/latest", function (req, res) {
-    res.send(200, topics.getLatestTopics(req));
+    res.send(200, weibo.getTopics(req));
+    //res.send(200, topics.getLatestTopics(req));
   });
+
+  weibo.handle(app);
 }
