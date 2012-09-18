@@ -1,5 +1,9 @@
-var topics = require('./topics');
-var weibo = require("../resources/weibo");
+var config = require('../config');
+
+var resources = {};
+for (var k in config.site.resources) {
+  resources[k] = require("../resources/"+k);
+}
 
 module.exports = function (app) {
   // homepage
@@ -7,16 +11,19 @@ module.exports = function (app) {
     res.render('index', {});
   });
 
-  app.get("/topics/more", function (req, res) {
-    weibo.getTopics(req, function (topics) {
-      res.send(200, topics);
+  app.get("/resources/:resource/topics/more", function (req, res) {
+    resources[req.params.resource].getTopics(req, res, function (err, topics) {
+      res.send(200, {error: err, topics: topics});
     });
-    //res.send(200, topics.getMoreTopics(req));
-  });
-  app.get("/topics/latest", function (req, res) {
-    res.send(200, weibo.getTopics(req));
-    //res.send(200, topics.getLatestTopics(req));
   });
 
-  weibo.handle(app);
+  app.get("/resources/:resource/topics/latest", function (req, res) {
+    resources[req.params.resource].getTopics(req, res, function (err, topics) {
+      res.send(200, {error: err, topics: topics});
+    });
+  });
+
+  for (var k in resources) {
+    if (resources[k].handle) resources[k].handle(app);
+  }
 }

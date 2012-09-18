@@ -34,7 +34,10 @@ body {
 #body{
   margin: 4em 0.5em 4em 0.5em;
 }
-#topLoading, #bottomLoading, #more, #end{
+#body.gray{
+  background-color: #eee;
+}
+#topLoading, #bottomLoading, #moreButton, #end{
   clear:both;
   text-align: center;
   display: none;
@@ -111,8 +114,6 @@ body {
 .topic .avatar img{
   width: 4em;
 }
-.topic .rightContent {
-}
 .topic .topicTitle {
   font-weight: bold;
 }
@@ -122,6 +123,13 @@ body {
 .topic .topicContent {
    color: #111;
 }
+.topic .topicStatus {
+  border: 0.1em solid #ddd;
+  padding: 1em;
+}
+.topic .pic img:hover {
+  cursor: pointer;
+}
 .topic .topicStats {
   text-align: right;
   font-size: 0.8em;
@@ -130,3 +138,35 @@ body {
   margin-right: 1em;
 }
 
+#source {
+  width: 100%;
+  text-align: center;
+  margin-top: 5em;
+}
+#source ul {
+  width: 80%;
+  margin: 0em auto;
+  padding: 0em;
+}
+#source li {
+  list-style: none;
+  padding: 0.5em 0em;
+  margin-top: 1em;
+  text-align: center;
+  font-size: 1.5em;
+  color: #fff;
+  font-weight: bold;
+  -khtml-border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  background: #999;
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#999), to(#666));
+  background:-moz-linear-gradient(top, #999, #666);
+}
+
+#about {
+  margin-top: 5em;
+  text-align: center;
+  font-size: 1em;
+}

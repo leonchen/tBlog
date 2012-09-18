@@ -18,6 +18,10 @@ block content
       #moreButton More
       #end You've touched the ground.
     #source
+      ul
+        each c, s in site.resources
+          li
+            a(id="#{s}Source")= c.name 
     #about 
       p !{site.about}
       p 
@@ -31,19 +35,62 @@ block content
           th Source
           th About
 
-  script(id="topicTemplate", type="text/tempate")
-    <div class="topic">
-    <table>
-    <tr>
-    <td class="avatar"><img src="<%= profile_image_url %>" /></td>
-    <td>
-    <div class="topicTitle"><%- screen_name %></div> 
-    <div class="topicTime">Posted at <%- created_at %></div>
-    <div class="topicContent"><p><%- text %><p><% if (retweeted_status) { %><%- retweeted_status.screen_name %>:<%- retweeted_status.text %><% }%></div> 
-    <div class="topicStats"><span><%= comments_count %> comments</span><span><%= reposts_count %> Reposts</span></div> 
-    </td>
-    </tr>
-    </table>
-    </div>
+  script(id="weiboTopicTemplate", type="text/tempate")
+    | <div class="topic">
+    |   <table>
+    |     <tr>
+    |       <td class="avatar"><img src="<%= t.user.profile_image_url %>" /></td>
+    |       <td>
+    |         <div class="topicTitle"><%- t.user.screen_name %></div> 
+    |         <div class="topicTime">Posted at <%- t.created_at %></div>
+    |         <div class="topicContent">
+    |           <p><%= showLinks(t.text) %></p>
+    |           <% if (t.retweeted_status) { %>
+    |             <div class="topicStatus">
+    |               <p><%- t.retweeted_status.user.screen_name %>:<%= showLinks(t.retweeted_status.text) %></p>
+    |               <% if (t.retweeted_status.thumbnail_pic) { %>
+    |                 <div class="pic"><a href="<%= t.retweeted_status.original_pic %>"><img src="<%= t.retweeted_status.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
+    |               <% } %>
+    |             </div> 
+    |           <% }%>
+    |         </div>
+    |         <% if (t.thumbnail_pic) { %>
+    |           <div class="pic"><a href="<%= t.original_pic %>"><img src="<%= t.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
+    |         <% } %>
+    |         <div class="topicStats"><span><%= t.comments_count %> comments</span><span><%= t.reposts_count %> Reposts</span></div> 
+    |       </td>
+    |     </tr>
+    |   </table>
+    | </div>
+
+
+
+  script(id="twitterTopicTemplate", type="text/tempate")
+    | <div class="topic">
+    |   <table>
+    |     <tr>
+    |       <td class="avatar"><img src="<%= t.user.profile_image_url %>" /></td>
+    |       <td>
+    |         <div class="topicTitle"><%- t.user.screen_name %></div> 
+    |         <div class="topicTime">Posted at <%- t.created_at %></div>
+    |         <div class="topicContent">
+    |           <p><%= showLinks(t.text) %></p>
+    |         </div>
+    |         <div class="topicStats"><span><span><%= t.retweet_count %> Retweets</span></div> 
+    |       </td>
+    |     </tr>
+    |   </table>
+    | </div>
+
+
+  script(id="blogTopicTemplate", type="text/tempate")
+    | <div class="topic">
+    |   <div class="topicTitle"><%- t.title %></div> 
+    |   <div class="topicTime">Posted at <%- showDate(t.timestamp) %></div>
+    |   <div class="topicContent">
+    |     <p><%= showLinks(t.content) %></p>
+    |   </div>
+    | </div>
+
 
   script(src='/javascripts/topics.js')

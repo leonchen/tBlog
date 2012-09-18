@@ -1,8 +1,15 @@
-var Topics = function () {
+var Blog = function () {
 };
 
-Topics.prototype = {
-  getMoreTopics: function (req) {
+Blog.prototype = {
+  handle: function (app) {
+  },
+
+  getTopics: function (req, res, cb) {
+    this.getMoreTopics(req, res, cb);
+  },
+
+  getMoreTopics: function (req, res, cb) {
     var timestamp = parseInt(req.query.timestamp) || (new Date()).getTime();
     var per = parseInt(req.query.per) || 20;
     var topics = [];
@@ -15,10 +22,10 @@ Topics.prototype = {
       });
     }
 
-    return topics; 
+    cb(null, topics); 
   },
 
-  getLatestTopics: function (req) {
+  getLatestTopics: function (req, res, cb) {
     var timestamp = parseInt(req.query.timestamp);
     var topics = [];
     for (var i=0;i<10;i++){
@@ -29,10 +36,9 @@ Topics.prototype = {
       });
     }
 
-    return topics; 
+    cb(null, topics); 
   }
 
 };
 
-
-module.exports = new Topics();
+module.exports = new Blog();

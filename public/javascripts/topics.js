@@ -3,7 +3,7 @@ var REQUEST_FROZEN_TIME = 2000;
 var END = false;
 
 var lastTimestamp = null;
-var pageSource = 'blog';
+var source = 'weibo';
 var pageTime = (new Date()).getTime();
 var requesters = {};
 
@@ -25,7 +25,14 @@ function showDate(timestamp) {
   var localTime = new Date();
   var date = new Date(timestamp - localTime.getTimezoneOffset()*60000);
   return date.toJSON().replace(/[^\d-:]+/g, ' ').replace(/\s\d+\s*$/,'');
+}
 
+function handleError(err) {
+  if (err.code == 302) {
+    window.location.href = err.message;
+  } else if (err.code == 500) {
+    alert(err.message);
+  }
 }
 
 function refreshTopics() {
@@ -38,23 +45,28 @@ function refreshTopics() {
   $topLoading.show();
   $refreshButton.hide();
   $refreshLoading.show();
-  var url = "/topics/latest?source="+pageSource+"&timestamp="+pageTime;
+  var url = "/resources/"+window.source+"/topics/latest?timestamp="+pageTime;
   requester.timestamp = now;
-  requester.request = $.getJSON(url, function (topics) {
+  requester.request = $.getJSON(url, function (res) {
     $refreshLoading.hide();
     $refreshButton.show();
     $topLoading.hide();
-    for (var i=0,t; t=topics[i]; i++) {
+    if (res.error) {
+      handleError(res.error);
+      return;
+    }
+    var $template = $("#"+window.source+"TopicTemplate").html();
+    for (var i=0,t; t=res.topics[i]; i++) {
       if (pageTime < t.timestamp) pageTime = t.timestamp;
-      $topics.prepend(_.template($topicTemplate, t));
+      $topics.prepend(_.template($template, t));
     }
     window.scrollTo(0, 0);
   });
 }
 
 function loadMoreTopics() {
+  $moreButton.hide();
   if (END) {
-    $moreButton.hide();
     $end.show();
     return;
   }
@@ -65,11 +77,15 @@ function loadMoreTopics() {
   if (requester.request) requester.request.abort();
 
   $bottomLoading.show();
-  var url = "/topics/more?source="+pageSource+"&per="+PER+(lastTimestamp ? '&timestamp='+lastTimestamp : '');
+  var url = "/resources/"+window.source+"/topics/more?per="+PER+(lastTimestamp ? '&timestamp='+lastTimestamp : '');
   requester.timestamp = now;
-  requester.request = $.getJSON(url, function (topics) {
+  requester.request = $.getJSON(url, function (res) {
     $bottomLoading.hide();
-    if (topics.length == 0) {
+    if (res.error) {
+      handleError(res.error);
+      return;
+    }
+    if (res.topics.length == 0) {
       END = true;
       $moreButton.hide();
       $end.show();
@@ -78,9 +94,10 @@ function loadMoreTopics() {
       $moreButton.show();
       $end.hide();
     }
-    for (var i=0,t; t=topics[i]; i++) {
+    var $template = $("#"+window.source+"TopicTemplate").html();
+    for (var i=0,t; t=res.topics[i]; i++) {
       if (lastTimestamp > t.timestamp) lastTimestamp = t.timestamp;
-      $topics.append(_.template($topicTemplate, t));
+      $topics.append(_.template($template, {t:t}));
     }
   });
 }
@@ -95,12 +112,27 @@ $moreButton.click(function () {
 
 $navButtons.click(function () {
   var $this = $(this);
+  var index = $this.prevAll("th").length;
+  if (index > 0 && $this.is(".on")) {
+    $navButtons.eq(0).click();
+    return;
+  }
   $navButtons.removeClass("on");
   $this.addClass("on");
   $bodyElements.hide();
-  $bodyElements.eq($this.prevAll("th").length).show();
+  $bodyElements.eq(index).show();
 });
 
 $(function () {
   loadMoreTopics();
+});
+
+
+var $sourceButtons = $("#source a").click(function () {
+  var source = this.id.replace(/source/i, '');
+  window.source = source;
+  $topics.html('');
+  loadMoreTopics();
+  $(this).addClass("on");
+  $navButtons.eq(0).click();
 });
