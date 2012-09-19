@@ -12,7 +12,7 @@ var app = express();
 var MOBILE_USER_AGENT_REGEXP = new RegExp('Android|webOS|iPhone|iPad|iPod|BlackBerry', 'i'); 
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3001);
+  app.set('port', process.env.PORT || config.port || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());

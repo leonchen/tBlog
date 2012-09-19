@@ -11,6 +11,10 @@ module.exports = function (app) {
     res.render('index', {});
   });
 
+  app.get("/test", function(req, res){
+    res.send(200, "app is up");
+  });
+
   app.get("/resources/:resource/topics/more", function (req, res) {
     resources[req.params.resource].getTopics(req, res, function (err, topics) {
       res.send(200, {error: err, topics: topics});

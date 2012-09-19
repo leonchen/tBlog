@@ -1,8 +1,28 @@
 module.exports = {
-  sessionSecret: '',
+  port: 80,
+  cookieSecret: 'NoHack!',
   site: {
     name: 'My Blog',
     title: 'Welcome to my Blog',
     about: '©2012 All Rights Reserved.'
+    resources: {
+      blog: {
+        name: "My Blog",
+      },
+
+      twitter: {
+        name: "Twitter",
+        baseURI: 'http://mysite.net',
+        consumerKey: '',
+        consumerSecret: ''
+      },
+
+      weibo: {
+        name: "新浪微博",
+        baseURI: 'http://mysite.net',
+        appKey: '',
+        appSecret: ''
+      }
+    }
   }
 };
