@@ -43,6 +43,7 @@ body {
   display: none;
 }
 #topLoading .loading, #bottomLoading .loading{
+  margin-top: 1em;
   width: 1.5em;
   height: 1.5em;
 }

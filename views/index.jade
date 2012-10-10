@@ -11,17 +11,17 @@ block content
   #body
     #home
       #topLoading
-        img.loading(src="/images/loading.gif")
+        img.loading(src="/images/refreshLoading.gif")
       #topics
       #bottomLoading
-        img.loading(src="/images/loading.gif")
+        img.loading(src="/images/refreshLoading.gif")
       #moreButton More
       #end You've touched the ground.
     #source
       ul
         each c, s in site.resources
-          li
-            a(id="#{s}Source")= c.name 
+          a
+            li(id="#{s}Source")= c.name 
     #about 
       p !{site.about}
       p 
@@ -92,5 +92,8 @@ block content
     |   </div>
     | </div>
 
+
+  script
+    var source = "#{source || 'weibo'}";
 
   script(src='/javascripts/topics.js')

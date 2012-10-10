@@ -2,11 +2,7 @@ var PER = 20;
 var REQUEST_FROZEN_TIME = 2000;
 var END = false;
 
-var lastTimestamp = null;
-var source = 'weibo';
-var pageTime = (new Date()).getTime();
 var requesters = {};
-
 
 var $topics = $("#topics");
 var $refreshButton = $('#refreshButton');
@@ -20,6 +16,13 @@ var $topicTemplate = $("#topicTemplate").html();
 
 var $bodyElements = $('#body>div');
 var $navButtons = $("#footer th");
+
+function resetPage() {
+  window.lastTimestamp = 0;
+  window.pageTime = 0;
+}
+
+resetPage();
 
 function showDate(timestamp) {
   var localTime = new Date();
@@ -55,9 +58,10 @@ function refreshTopics() {
       handleError(res.error);
       return;
     }
+    if (res.topics.length == 0) return;
     var $template = $("#"+window.source+"TopicTemplate").html();
     for (var i=0,t; t=res.topics[i]; i++) {
-      if (pageTime < t.timestamp) pageTime = t.timestamp;
+      if (pageTime == 0 || pageTime < t.id) pageTime = t.id;
       $topics.prepend(_.template($template, t));
     }
     window.scrollTo(0, 0);
@@ -77,7 +81,7 @@ function loadMoreTopics() {
   if (requester.request) requester.request.abort();
 
   $bottomLoading.show();
-  var url = "/resources/"+window.source+"/topics/more?per="+PER+(lastTimestamp ? '&timestamp='+lastTimestamp : '');
+  var url = "/resources/"+window.source+"/topics/more?per="+PER+'&timestamp='+lastTimestamp;
   requester.timestamp = now;
   requester.request = $.getJSON(url, function (res) {
     $bottomLoading.hide();
@@ -96,7 +100,8 @@ function loadMoreTopics() {
     }
     var $template = $("#"+window.source+"TopicTemplate").html();
     for (var i=0,t; t=res.topics[i]; i++) {
-      if (lastTimestamp > t.timestamp) lastTimestamp = t.timestamp;
+      if (pageTime == 0 || pageTime < t.id) pageTime = t.id;
+      if (lastTimestamp == 0 || lastTimestamp > t.id) lastTimestamp = t.id;
       $topics.append(_.template($template, {t:t}));
     }
   });
@@ -128,9 +133,10 @@ $(function () {
 });
 
 
-var $sourceButtons = $("#source a").click(function () {
+var $sourceButtons = $("#source li").click(function () {
   var source = this.id.replace(/source/i, '');
   window.source = source;
+  window.resetPage();
   $topics.html('');
   loadMoreTopics();
   $(this).addClass("on");

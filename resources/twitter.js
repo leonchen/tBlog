@@ -13,21 +13,21 @@ var accessTokenURI = 'https://api.twitter.com/oauth/access_token';
 var oauth = new OAuth(requestTokenURI, accessTokenURI, key, secret, "1.0", baseURI+authRedirectPath, "HMAC-SHA1");
 
 
-var Weibo = function () {
+var Twitter = function () {
 }
 
-Weibo.prototype = {
+Twitter.prototype = {
    handle: function (app) {
      var self = this;
      app.get(authRedirectPath, function (req, res) {
-       res.cookie("twitter_oauth_verifier", req.query.oauth_verifier);
+       //res.cookie("twitter_oauth_verifier", req.query.oauth_verifier);
        oauth.getOAuthAccessToken(req.cookies.twitter_oauth_token, req.cookies.twitter_oauth_token_secret, req.query.oauth_verifier, function(error, oauth_access_token, oauth_access_token_secret, results){
          if (error){
            res.send(500, error.message);
          } else {
            res.cookie("twitter_oauth_access_token", oauth_access_token);
            res.cookie("twitter_oauth_access_token_secret", oauth_access_token_secret);
-           res.redirect("/");
+           res.redirect("/?source=twitter");
          }
        });
      });
@@ -57,4 +57,4 @@ Weibo.prototype = {
 
 };
 
-module.exports = new Weibo();
+module.exports = new Twitter();

@@ -9,7 +9,7 @@ var config = require('./config');
 
 var app = express();
 
-var MOBILE_USER_AGENT_REGEXP = new RegExp('Android|webOS|iPhone|iPad|iPod|BlackBerry', 'i'); 
+var MOBILE_USER_AGENT_REGEXP = new RegExp('Android|webOS|iPhone|iPod|BlackBerry', 'i'); 
 
 app.configure(function(){
   app.set('port', process.env.PORT || config.port || 3001);
