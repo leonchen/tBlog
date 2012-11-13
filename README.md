@@ -1,4 +1,4 @@
-jBlog
+tBlog
 =====
 
-blog in nodejs
+blog integrated with twitter/weibo in nodejs
