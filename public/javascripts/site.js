@@ -12,3 +12,38 @@ var resizeImg = function (img, max) {
 var showLinks = function (txt) {
   return txt.replace(/(http:\/\/[\w.\/]+)/g, '<a href="$1" target="_blank">$1</a>'); 
 };
+
+
+var $containers = $('body>div.container');
+var $topic = $("#topicContainer");
+var $image = $("#imageContainer>img");
+var $video = $("#videoContainer>video");
+var $audio = $("#audioContainer>audio");
+var topicScrollTop = 0;
+$('#imageContainer,#videoContainer,#audioContainer').click(function () {
+  window.showTopic();
+});
+
+var showTopic = function () {
+  showContainer('topic');
+  $(window).scrollTop(topicScrollTop);
+}
+var showImage = function (img) {
+  showMedia('image', img);
+}
+var showVideo = function (video) {
+  showMedia('video', video);
+}
+var showAudio = function (audio) {
+  showMedia('audio', audio);
+}
+var showContainer = function (media) {
+  window.$containers.hide();
+  $("#"+media+"Container").show();
+}
+var showMedia = function (mediaType, media) {
+  topicScrollTop = $(window).scrollTop();
+  window["$"+mediaType].attr("src", '');
+  showContainer(mediaType);
+  window["$"+mediaType].attr("src", media);
+};

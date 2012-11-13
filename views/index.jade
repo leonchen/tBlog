@@ -49,13 +49,13 @@ block content
     |             <div class="topicStatus">
     |               <p><%- t.retweeted_status.user.screen_name %>:<%= showLinks(t.retweeted_status.text) %></p>
     |               <% if (t.retweeted_status.thumbnail_pic) { %>
-    |                 <div class="pic"><a href="<%= t.retweeted_status.original_pic %>"><img src="<%= t.retweeted_status.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
+    |                 <div class="pic"><a href="javascript:void(0);" onclick="showImage('<%= t.retweeted_status.original_pic %>');"><img src="<%= t.retweeted_status.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
     |               <% } %>
     |             </div> 
     |           <% }%>
     |         </div>
     |         <% if (t.thumbnail_pic) { %>
-    |           <div class="pic"><a href="<%= t.original_pic %>"><img src="<%= t.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
+    |           <div class="pic"><a href="javascript:void(0);" onclick="showImage('<%= t.original_pic %>');"><img src="<%= t.thumbnail_pic %>" onload="resizeImg(this)" /></a></div>
     |         <% } %>
     |         <div class="topicStats"><span><%= t.comments_count %> comments</span><span><%= t.reposts_count %> Reposts</span></div> 
     |       </td>
