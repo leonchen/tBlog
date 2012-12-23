@@ -43,14 +43,14 @@ Blog.prototype = {
   getMoreTopics: function (req, res, cb) {
     var timestamp = parseInt(req.topicParams.max_id) || Date.now();
     var per = parseInt(req.topicParams.count) || 20;
-    db.all("select * from blog_topics where timestamp <= ? limit ?", [timestamp, per], function (err, rows) { 
+    db.all("select * from blog_topics where timestamp < ? order by timestamp desc limit ?", [timestamp, per], function (err, rows) { 
       cb(err, rows); 
     });
   },
 
   getLatestTopics: function (req, res, cb) {
     var timestamp = parseInt(req.topicParams.since_id);
-    db.all("select * from blog_topics where timestamp > ?", [timestamp], function (err, rows) { 
+    db.all("select * from blog_topics where timestamp > ? order by timestamp desc", [timestamp], function (err, rows) { 
       cb(err, rows); 
     });
   }
