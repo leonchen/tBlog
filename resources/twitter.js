@@ -45,7 +45,8 @@ Twitter.prototype = {
          }
        });
      } else {
-       oauth.get("https://api.twitter.com/1.1/statuses/home_timeline.json", req.cookies.twitter_oauth_access_token, req.cookies.twitter_oauth_access_token_secret, function (err, result, response) {
+       var params = req.topicParams;
+       oauth.get("https://api.twitter.com/1.1/statuses/home_timeline.json?"+qs.stringify(params), req.cookies.twitter_oauth_access_token, req.cookies.twitter_oauth_access_token_secret, function (err, result, response) {
          if (err) {
            cb({code: 500, message: err.message}, null);
          } else {

@@ -2,6 +2,9 @@ body {
   padding: 0px;
   margin: 0px auto;
 }
+table,th,td {
+  border: none;
+}
 #header{
   width:100%;
   text-align: center;
@@ -172,17 +175,17 @@ body {
   font-size: 1em;
 }
 
-#post table.postForm {
+#post .postForm {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #ccc;
 }
 
-#post table.postForm td,th {
+#post .postForm td,th {
   border: 1px solid #ccc;
 }
 
-#post table.postForm th {
+#post .postForm th {
   width: 10em;
 }
 
