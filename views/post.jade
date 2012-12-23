@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  #post
+    form(action="/post", method="post")
+      table.postForm
+        tr
+          th Title
+          td
+            input.blogTitle(name="title")
+        tr
+          th Content
+          td
+            textarea.blogContent(name="content")
+        tr
+          th Password
+          td
+            input.postSecret(type="password", name="secret")
+
+      input(type="submit", value="Submit")

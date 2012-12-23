@@ -171,3 +171,26 @@ body {
   text-align: center;
   font-size: 1em;
 }
+
+#post table.postForm {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+#post table.postForm td,th {
+  border: 1px solid #ccc;
+}
+
+#post table.postForm th {
+  width: 10em;
+}
+
+#post .blogTitle {
+  width: 80%;
+  height: 2em;
+}
+#post .blogContent {
+  width: 80%;
+  height: 20em;
+}
