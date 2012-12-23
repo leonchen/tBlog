@@ -1,6 +1,6 @@
 var PER = 20;
 var REQUEST_FROZEN_TIME = 2000;
-var END = false;
+var resourcesEnding = {};
 
 var requesters = {};
 
@@ -70,7 +70,7 @@ function refreshTopics() {
 
 function loadMoreTopics() {
   $moreButton.hide();
-  if (END) {
+  if (resourcesEnding[window.source]) {
     $end.show();
     return;
   }
@@ -90,11 +90,12 @@ function loadMoreTopics() {
       return;
     }
     if (res.topics.length == 0) {
-      END = true;
+      resourcesEnding[window.source] = true;
       $moreButton.hide();
       $end.show();
       return;
     } else {
+      resourcesEnding[window.source] = false;
       $moreButton.show();
       $end.hide();
     }
