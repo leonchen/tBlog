@@ -136,10 +136,5 @@ $(function () {
 
 var $sourceButtons = $("#source li").click(function () {
   var source = this.id.replace(/source/i, '');
-  window.source = source;
-  window.resetPage();
-  $topics.html('');
-  loadMoreTopics();
-  $(this).addClass("on");
-  $navButtons.eq(0).click();
+  window.location.href = window.location.protocol + "//" + window.location.host + "/?source=" + source;
 });

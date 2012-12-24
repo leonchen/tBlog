@@ -8,7 +8,7 @@ for (var k in config.site.resources) {
 module.exports = function (app) {
   // homepage
   app.get("/", function(req, res){
-    res.render('index', {source: req.query.source});
+    res.render('index', {source: (req.query.source || config.site.defaultResource)});
   });
 
   app.get("/test", function(req, res){

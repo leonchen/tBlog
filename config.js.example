@@ -6,6 +6,7 @@ module.exports = {
     name: 'My Blog',
     title: 'Welcome to my Blog',
     about: '©2012 All Rights Reserved.'
+    defaultResource: 'blog',
     resources: {
       blog: {
         name: "My Blog",
