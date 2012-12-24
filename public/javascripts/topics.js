@@ -101,8 +101,9 @@ function loadMoreTopics() {
     }
     var $template = $("#"+window.source+"TopicTemplate").html();
     for (var i=0,t; t=res.topics[i]; i++) {
-      if (pageTime == 0 || pageTime < t.id) pageTime = t.id;
-      if (lastTimestamp == 0 || lastTimestamp > t.id) lastTimestamp = t.id;
+      var ts = t.id || t.timestamp;
+      if (pageTime == 0 || pageTime < ts) pageTime = ts;
+      if (lastTimestamp == 0 || lastTimestamp > ts) lastTimestamp = ts;
       $topics.append(_.template($template, {t:t}));
     }
   });
